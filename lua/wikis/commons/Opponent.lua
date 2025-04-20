@@ -226,6 +226,7 @@ end
 ---It's still a work in progress, it's not fully implemented all cases
 ---@param opponent1 standardOpponent
 ---@param opponent2 standardOpponent
+---@return boolean
 function Opponent.same(opponent1, opponent2)
 	return Opponent.toName(opponent1) == Opponent.toName(opponent2)
 end
