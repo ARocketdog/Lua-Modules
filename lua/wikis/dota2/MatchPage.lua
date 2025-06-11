@@ -15,6 +15,9 @@ local Table = require('Module:Table')
 
 local BaseMatchPage = Lua.import('Module:MatchPage/Base')
 
+local OpponentLibraries = Lua.import('Module:OpponentLibraries')
+local OpponentDisplay = OpponentLibraries.OpponentDisplay
+
 local Link = Lua.import('Module:Widget/Basic/Link')
 local HtmlWidgets = Lua.import('Module:Widget/Html/All')
 local Div = HtmlWidgets.Div
@@ -126,7 +129,7 @@ function MatchPage:_renderDraft(game)
 			children = Array.map(self.opponents, function (opponent, opponentIndex)
 				local team = game.teams[opponentIndex]
 				return TeamVeto{
-					teamIcon = opponent.iconDisplay,
+					teamIcon = OpponentDisplay.InlineOpponent{opponent = opponent, style = 'icon'},
 					vetoRows = {
 						VetoRow{
 							vetoType = 'pick',
@@ -243,7 +246,7 @@ function MatchPage:_renderStatsTeamDisplay(game, teamIndex)
 		children = {
 			Div{
 				classes = {'match-bm-team-stats-team-logo'},
-				children = self.opponents[teamIndex].iconDisplay
+				children = OpponentDisplay.InlineOpponent{opponent = self.opponents[teamIndex], style = 'icon'}
 			},
 			Div{
 				classes = {'match-bm-team-stats-team-side'},
@@ -286,7 +289,7 @@ function MatchPage:_renderTeamPerformance(game, teamIndex)
 		children = WidgetUtil.collect(
 			Div{
 				classes = {'match-bm-players-team-header'},
-				children = self.opponents[teamIndex].iconDisplay
+				children = OpponentDisplay.InlineOpponent{opponent = self.opponents[teamIndex], style = 'icon'}
 			},
 			Array.map(game.teams[teamIndex].players, function (player)
 				return self:_renderPlayerPerformance(game, teamIndex, player)

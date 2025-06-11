@@ -48,7 +48,6 @@ local WidgetUtil = Lua.import('Module:Widget/Util')
 
 ---@class MatchPageOpponent: standardOpponent
 ---@field opponentIndex integer
----@field iconDisplay string
 ---@field teamTemplateData teamTemplateData
 ---@field seriesDots string[]
 
@@ -161,7 +160,6 @@ function BaseMatchPage:populateOpponents()
 			return
 		end
 
-		opponent.iconDisplay = mw.ext.TeamTemplate.teamicon(opponent.template)
 		opponent.teamTemplateData = teamTemplate
 
 		opponent.seriesDots = Array.map(self.games, function(game)

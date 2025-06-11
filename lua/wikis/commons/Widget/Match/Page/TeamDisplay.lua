@@ -13,6 +13,7 @@ local TeamTemplate = require('Module:TeamTemplate')
 
 local OpponentLibraries = Lua.import('Module:OpponentLibraries')
 local Opponent = OpponentLibraries.Opponent
+local OpponentDisplay = OpponentLibraries.OpponentDisplay
 
 local Widget = Lua.import('Module:Widget')
 local HtmlWidgets = Lua.import('Module:Widget/Html/All')
@@ -67,7 +68,7 @@ function MatchPageTeamDisplay:_buildChildren()
 	local data = self.props.opponent.teamTemplateData
 	assert(data, TeamTemplate.noTeamMessage(opponent.template))
 	return {
-		mw.ext.TeamTemplate.teamicon(data.templatename),
+		OpponentDisplay.InlineOpponent{opponent = self.props.opponent, style = 'icon'},
 		Div{
 			classes = { 'match-bm-match-header-team-group' },
 			children = {

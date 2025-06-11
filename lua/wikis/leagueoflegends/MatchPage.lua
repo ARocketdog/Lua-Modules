@@ -17,6 +17,9 @@ local Table = require('Module:Table')
 
 local BaseMatchPage = Lua.import('Module:MatchPage/Base')
 
+local OpponentLibraries = Lua.import('Module:OpponentLibraries')
+local OpponentDisplay = OpponentLibraries.OpponentDisplay
+
 local HtmlWidgets = Lua.import('Module:Widget/Html/All')
 local Div = HtmlWidgets.Div
 local IconFa = Lua.import('Module:Widget/Image/Icon/Fontawesome')
@@ -216,7 +219,7 @@ function MatchPage:_renderGameOverview(game)
 				children = {
 					Div{
 						classes = {'match-bm-lol-game-summary-team'},
-						children = self.opponents[1].iconDisplay
+						children = OpponentDisplay.InlineOpponent{opponent = self.opponents[1], style = 'icon'}
 					},
 					Div{
 						classes = {'match-bm-lol-game-summary-center'},
@@ -224,7 +227,7 @@ function MatchPage:_renderGameOverview(game)
 					},
 					Div{
 						classes = {'match-bm-lol-game-summary-team'},
-						children = self.opponents[2].iconDisplay
+						children = OpponentDisplay.InlineOpponent{opponent = self.opponents[2], style = 'icon'}
 					},
 				}
 			}
@@ -288,7 +291,7 @@ function MatchPage:_renderGameTeamVetoOverview(game, teamIndex)
 		children = {
 			Div{
 				classes = {'match-bm-game-veto-overview-team-header'},
-				children = self.opponents[teamIndex].iconDisplay
+				children = OpponentDisplay.InlineOpponent{opponent = self.opponents[teamIndex], style = 'icon'}
 			},
 			Div{
 				classes = {'match-bm-lol-game-veto-overview-team-veto'},
@@ -327,7 +330,7 @@ function MatchPage:_renderGameTeamVetoOrder(game, teamIndex)
 		children = {
 			Div{
 				classes = {'match-bm-lol-game-veto-order-team-header'},
-				children = self.opponents[teamIndex].iconDisplay
+				children = OpponentDisplay.InlineOpponent{opponent = self.opponents[teamIndex], style = 'icon'}
 			},
 			Div{
 				classes = {'match-bm-lol-game-veto-order-team-choices'},
@@ -362,7 +365,7 @@ function MatchPage:_renderTeamStats(game)
 					children = {
 						Div{
 							classes = {'match-bm-lol-team-stats-header-team'},
-							children = self.opponents[1].iconDisplay
+							children = OpponentDisplay.InlineOpponent{opponent = self.opponents[1], style = 'icon'}
 						},
 						Div{
 							classes = {'match-bm-team-stats-list-cell'},
@@ -370,7 +373,7 @@ function MatchPage:_renderTeamStats(game)
 						},
 						Div{
 							classes = {'match-bm-lol-team-stats-header-team'},
-							children = self.opponents[2].iconDisplay
+							children = OpponentDisplay.InlineOpponent{opponent = self.opponents[2], style = 'icon'}
 						}
 					}
 				},
@@ -454,7 +457,7 @@ function MatchPage:_renderTeamPerformance(game, teamIndex)
 		children = WidgetUtil.collect(
 			Div{
 				classes = {'match-bm-players-team-header'},
-				children = self.opponents[teamIndex].iconDisplay
+				children = OpponentDisplay.InlineOpponent{opponent = self.opponents[teamIndex], style = 'icon'}
 			},
 			Array.map(game.teams[teamIndex].players, function (player)
 				return self:_renderPlayerPerformance(game, teamIndex, player)

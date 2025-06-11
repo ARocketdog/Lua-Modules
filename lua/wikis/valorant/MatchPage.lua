@@ -14,6 +14,9 @@ local Table = require('Module:Table')
 
 local BaseMatchPage = Lua.import('Module:MatchPage/Base')
 
+local OpponentLibraries = Lua.import('Module:OpponentLibraries')
+local OpponentDisplay = OpponentLibraries.OpponentDisplay
+
 local HtmlWidgets = Lua.import('Module:Widget/Html/All')
 local Div = HtmlWidgets.Div
 local IconFa = Lua.import('Module:Widget/Image/Icon/Fontawesome')
@@ -155,7 +158,7 @@ function MatchPage:_renderGameOverview(game)
 						classes = {'match-bm-lol-game-summary-team'},
 						children = {
 							makeTeamHalvesDisplay(team1),
-							self.opponents[1].iconDisplay,
+							OpponentDisplay.InlineOpponent{opponent = self.opponents[1], style = 'icon'},
 						}
 					},
 					Div{
@@ -178,7 +181,7 @@ function MatchPage:_renderGameOverview(game)
 					Div{
 						classes = {'match-bm-lol-game-summary-team'},
 						children = {
-							self.opponents[2].iconDisplay,
+							OpponentDisplay.InlineOpponent{opponent = self.opponents[2], style = 'icon'},
 							makeTeamHalvesDisplay(team2),
 						}
 					},
@@ -238,7 +241,7 @@ function MatchPage:_renderPerformanceForTeam(game, teamIndex)
 		children = WidgetUtil.collect(
 			Div{
 				classes = {'match-bm-players-team-header'},
-				children = self.opponents[teamIndex].iconDisplay
+				children = OpponentDisplay.InlineOpponent{opponent = self.opponents[teamIndex], style = 'icon'}
 			},
 			Array.map(game.teams[teamIndex].players, function (player)
 				return self:_renderPlayerPerformance(game, teamIndex, player)
