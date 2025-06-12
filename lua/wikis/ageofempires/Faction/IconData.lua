@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=ageofempires
 -- page=Module:Faction/IconData
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -134,7 +133,7 @@ local byFactionAoE2 = {
 	huns = {
 		icon = 'File:Huns AoE2 icon.png'
 	},
-	incas = {
+	inca = {
 		icon = 'File:Incas AoE2 icon.png'
 	},
 	indians = {
@@ -145,6 +144,12 @@ local byFactionAoE2 = {
 	},
 	japanese = {
 		icon = 'File:Japanese AoE2 icon.png'
+	},
+	jurchens = {
+		icon = 'File:Jurchens AoE2 icon.png'
+	},
+	khitans = {
+		icon = 'File:Khitans AoE2 icon.png'
 	},
 	khmer = {
 		icon = 'File:Khmer AoE2 icon.png'
@@ -164,7 +169,7 @@ local byFactionAoE2 = {
 	malians = {
 		icon = 'File:Malians AoE2 icon.png'
 	},
-	mayans = {
+	maya = {
 		icon = 'File:Mayans AoE2 icon.png'
 	},
 	mongols = {
@@ -184,6 +189,9 @@ local byFactionAoE2 = {
 	},
 	saracens = {
 		icon = 'File:Saracens AoE2 icon.png'
+	},
+	shu = {
+		icon = 'File:Shu AoE2 icon.png'
 	},
 	sicilians = {
 		icon = 'File:Sicilians AoE2 icon.png'
@@ -212,7 +220,12 @@ local byFactionAoE2 = {
 	vikings = {
 		icon = 'File:Vikings AoE2 icon.png'
 	},
-
+	wei = {
+		icon = 'File:Wei AoE2 icon.png'
+	},
+	wu = {
+		icon = 'File:Wu AoE2 icon.png'
+	},
 	unknown = {
 		icon = 'File:Char head filler.png'
 	},
@@ -319,11 +332,17 @@ local byFactionAoE4 = {
 	holyromanempire = {
 		icon = 'File:HRE AoE4 Icon.png',
 	},
+	houseoflancaster = {
+		icon = 'File:House of Lancaster AoE4 Icon.png',
+	},
 	japanese = {
 		icon = 'File:Japanese AoE4 Icon.png',
 	},
 	jeannedarc = {
 		icon = 'File:Jeanne d\'Arc AoE4 Icon.png',
+	},
+	knightstemplar = {
+		icon = 'File:Knights Templar AoE4 Icon.png',
 	},
 	malians = {
 		icon = 'File:Malians AoE4 Icon.png',
@@ -351,7 +370,7 @@ local byFactionAoE4 = {
 
 local byFactionAoM = {
 	chinese = {
-		icon = 'File:Chinese AoM icon.png',
+		icon = 'File:Chinese AoM R icon.png',
 	},
 	greeks = {
 		icon = 'File:Greek AoM R icon.png',
@@ -366,7 +385,7 @@ local byFactionAoM = {
 		icon = 'File:Norse AoM R icon.png',
 	},
 	fuxi = {
-		icon = 'File:Fu Xi AoM icon.png',
+		icon = 'File:Fuxi AoM R icon.png',
 	},
 	freyr = {
 		icon = 'File:Freyr AoM R icon.png',
@@ -387,7 +406,7 @@ local byFactionAoM = {
 		icon = 'File:Loki AoM R icon.png',
 	},
 	nuwa = {
-		icon = 'File:Nu Wa AoM icon.png',
+		icon = 'File:Nuwa AoM R icon.png',
 	},
 	odin = {
 		icon = 'File:Odin AoM R icon.png',
@@ -405,7 +424,7 @@ local byFactionAoM = {
 		icon = 'File:Set AoM R icon.png',
 	},
 	shennong = {
-		icon = 'File:Shennong AoM icon.png',
+		icon = 'File:Shennong AoM R icon.png',
 	},
 	thor = {
 		icon = 'File:Thor AoM R icon.png',

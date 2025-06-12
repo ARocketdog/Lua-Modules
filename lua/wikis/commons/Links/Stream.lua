@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Links/Stream
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -15,9 +14,12 @@ local Array = require('Module:Array')
 local Class = require('Module:Class')
 local Logic = require('Module:Logic')
 local Page = require('Module:Page')
+local PageVariableNamespace = require('Module:PageVariableNamespace')
 local String = require('Module:StringUtils')
 local Table = require('Module:Table')
 local Variables = require('Module:Variables')
+
+local streamVars = PageVariableNamespace('StreamCache')
 
 local TLNET_STREAM = 'stream'
 
@@ -71,9 +73,17 @@ end
 ---@return string
 function StreamLinks.resolve(platformName, streamValue)
 	platformName = StreamLinks.resolvePlatform(platformName)
-	local streamLink = mw.ext.StreamPage.resolve_stream(platformName, streamValue)
 
-	return (string.gsub(streamLink, 'Special:Stream/' .. platformName, ''))
+	local cachedLink = streamVars:get(platformName .. '_' .. streamValue)
+	if cachedLink then
+		return cachedLink
+	end
+
+	local streamLink = mw.ext.StreamPage.resolve_stream(platformName, streamValue)
+	local cleanedStreamLink = string.gsub(streamLink, 'Special:Stream/' .. platformName, '')
+	streamVars:set(platformName .. '_' .. streamValue, cleanedStreamLink)
+
+	return cleanedStreamLink
 end
 
 ---@param platform string

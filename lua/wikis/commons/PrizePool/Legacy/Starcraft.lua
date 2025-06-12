@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:PrizePool/Legacy/Starcraft
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -39,6 +38,7 @@ local CACHED_DATA = {
 ---@return Html
 function StarcraftLegacyPrizePool.run(frame)
 	local args = Template.retrieveReturnValues('PrizePool')
+	---@type table
 	local header = Array.sub(args, 1, 1)[1]
 
 	local slots = Array.sub(args, 2)

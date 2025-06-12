@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Timezone/Data
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -37,7 +36,7 @@ return {
 	},
 	ALMT = {
 		name = 'Alma-Ata Time',
-		offset = {6, 0},
+		offset = {5, 0},
 	},
 	AMT = {
 		name = 'Armenian Time',

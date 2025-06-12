@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=stormgate
 -- page=Module:Infobox/Building/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -160,8 +159,8 @@ function CustomBuilding:subHeaderDisplay(args)
 	if Table.includes(subfactionData, '1v1') then
 		return tostring(mw.html.create('span')
 			:css('font-size', '90%')
-			:wikitext(Abbreviation.make('Standard', 'This is part of Head to Head 1v1. '
-				.. 'It might also be part of certain Hero rosters in Team Mayhem or Co-op.'))
+			:wikitext(Abbreviation.make{text = 'Standard', title = 'This is part of Head to Head 1v1. '
+				.. 'It might also be part of certain Hero rosters in Team Mayhem or Co-op.'})
 		)
 	end
 
@@ -188,7 +187,7 @@ function CustomBuilding:_energyDisplay()
 	return table.concat({
 		ICON_ENERGY .. ' ' .. energy,
 		'/' .. (maxEnergy == 0 and '?' or maxEnergy),
-		gainRate and (' (+' .. gainRate .. '/s)') or Abbreviation.make('+ varies', self.args.energy_desc),
+		gainRate and (' (+' .. gainRate .. '/s)') or Abbreviation.make{text = '+ varies', title = self.args.energy_desc},
 	})
 end
 
@@ -198,9 +197,9 @@ end
 function CustomBuilding._hotkeys(hotkey1, hotkey2)
 	if String.isEmpty(hotkey1) then return end
 	if String.isEmpty(hotkey2) then
-		return Hotkeys.hotkey(hotkey1)
+		return Hotkeys.hotkey{hotkey = hotkey1}
 	end
-	return Hotkeys.hotkey2(hotkey1, hotkey2, 'plus')
+	return Hotkeys.hotkey2{hotkey1 = hotkey1, hotkey2 = hotkey2, seperator = 'plus'}
 end
 
 ---@param inputString string?
@@ -306,8 +305,8 @@ function CustomBuilding:setLpdbData(args)
 	})
 end
 
----@param data table
----@return table?
+---@param data string[]
+---@return string[]
 function CustomBuilding:_parseSubfactionData(data)
 	local parsedElements = Array.map(data, function(dataElement)
 		return Array.parseCommaSeparatedString(dataElement, ':')
@@ -321,6 +320,7 @@ function CustomBuilding:_parseSubfactionData(data)
 end
 
 ---@param inputString string?
+---@param sep string?
 ---@return string[]
 function CustomBuilding:_csvToPageList(inputString, sep)
 	return Array.map(Array.parseCommaSeparatedString(inputString, sep), function(value)
@@ -329,6 +329,7 @@ function CustomBuilding:_csvToPageList(inputString, sep)
 end
 
 ---@param input string?
+---@param sep string?
 ---@return string
 function CustomBuilding:_displayCsvAsPageCsv(input, sep)
 	return table.concat(self:_csvToPageList(input, sep), ', ')

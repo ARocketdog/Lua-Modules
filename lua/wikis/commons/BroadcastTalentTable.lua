@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:BroadcastTalentTable
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -339,7 +338,7 @@ function BroadcastTalentTable:_tournamentDisplayName(tournament)
 end
 
 ---@param tournament table
----@return string
+---@return string?, string
 function BroadcastTalentTable:_tierDisplay(tournament)
 	local tier, tierType, options = Tier.parseFromQueryData(tournament)
 	assert(Tier.isValid(tier, tierType), 'Broadcaster event with unset or invalid tier/tiertype: ' .. tournament.pagename)

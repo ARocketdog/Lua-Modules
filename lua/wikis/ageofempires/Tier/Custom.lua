@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=ageofempires
 -- page=Module:Tier/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -27,7 +26,7 @@ function TierCustom.parseFromQueryData(queryData)
 end
 
 --- Builds the display for a given (tier, tierType) tuple
----@param tier integer
+---@param tier string|integer
 ---@param tierType string?
 ---@param options table?
 ---@return string?

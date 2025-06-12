@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:GameSummary
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -28,14 +27,12 @@ function CustomGameSummary.getGameByMatchId(props)
 	game.extradata.settings = match.extradata.settings
 
 	SummaryHelper.updateGameOpponents(match, game)
-	local scoringData = SummaryHelper.createScoringData(match)
 
 	return MatchSummaryWidgets.Tab{
 		matchId = match.matchId,
 		idx = props.gameIdx,
 		children = {
 			MatchSummaryWidgets.GameDetails{game = game},
-			MatchSummaryWidgets.PointsDistribution{scores = scoringData},
 			MatchSummaryWidgets.Mvp(game.extradata.mvp),
 			SummaryHelper.standardGame(game)
 		}

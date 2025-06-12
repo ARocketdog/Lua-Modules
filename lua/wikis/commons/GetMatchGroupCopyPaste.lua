@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:GetMatchGroupCopyPaste
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -224,6 +223,28 @@ function CopyPaste.singleMatch(frame, args)
 	local mode = WikiSpecific.getMode(args.mode)
 
 	display = display .. '\n|' .. WikiSpecific.getMatchCode(bestof, mode, 1, opponents, args) .. '\n}}'
+
+	return CopyPaste._generateCopyPaste(display)
+end
+
+---@param frame Frame
+---@param args table
+---@return Html
+function CopyPaste.matchPage(frame, args)
+	if not args then
+		args = Arguments.getArgs(frame)
+	end
+
+	args.generateMatchPage = true
+
+	local bestof = tonumber(args.bestof) or 3
+	local opponents = tonumber(args.opponents) or 2
+	local mode = WikiSpecific.getMode(args.mode)
+
+	local display = WikiSpecific.getMatchCode(bestof, mode, 1, opponents, args)
+
+	-- Manually change 'Match' to 'MatchPage'
+	display = display:gsub('Match2?', 'MatchPage', 1)
 
 	return CopyPaste._generateCopyPaste(display)
 end

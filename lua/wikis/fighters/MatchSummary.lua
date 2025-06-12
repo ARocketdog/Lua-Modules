@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=fighters
 -- page=Module:MatchSummary
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -88,7 +87,9 @@ function CustomMatchSummary._createStandardGame(game, props)
 		return
 	end
 
-	local scores = Array.map(game.opponents, Operator.property('score'))
+	local scores = Array.map(game.opponents, function(opponent)
+		return DisplayHelper.MapScore(opponent, game.status)
+	end)
 
 	local scoreDisplay = table.concat(scores, '&nbsp;-&nbsp;')
 

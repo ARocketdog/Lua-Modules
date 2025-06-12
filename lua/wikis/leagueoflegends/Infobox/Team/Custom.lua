@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=leagueoflegends
 -- page=Module:Infobox/Team/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -11,15 +10,18 @@ local Logic = require('Module:Logic')
 local Lua = require('Module:Lua')
 local RoleOf = require('Module:RoleOf')
 local String = require('Module:StringUtils')
-local TeamTemplate = require('Module:Team')
-local Template = require('Module:Template')
 
+local OpponentLibraries = Lua.import('Module:OpponentLibraries')
+local OpponentDisplay = OpponentLibraries.OpponentDisplay
+
+local Achievements = Lua.import('Module:Infobox/Extension/Achievements')
 local Injector = Lua.import('Module:Widget/Injector')
 local Region = Lua.import('Module:Region')
 local Team = Lua.import('Module:Infobox/Team')
 
 local Widgets = require('Module:Widget/All')
 local Cell = Widgets.Cell
+local UpcomingTournaments = Lua.import('Module:Widget/Infobox/UpcomingTournaments')
 
 local REGION_REMAPPINGS = {
 	['south america'] = 'latin america',
@@ -38,6 +40,14 @@ local CustomInjector = Class.new(Injector)
 function CustomTeam.run(frame)
 	local team = CustomTeam(frame)
 	team:setWidgetInjector(CustomInjector(team))
+
+	-- Automatically load achievements
+	team.args.achievements = Achievements.team{noTemplate = true, baseConditions = {
+		'[[liquipediatiertype::]]',
+		'[[liquipediatier::1]]',
+		'[[placement::1]]',
+		'[[publishertier::true]]'
+	}}
 
 	-- Automatic org people
 	team.args.coach = RoleOf.get{role = 'Coach'}
@@ -58,13 +68,9 @@ function CustomTeam:createRegion(region)
 	return remappedRegion and self:createRegion(remappedRegion) or regionData
 end
 
----@return string?
+---@return Widget
 function CustomTeam:createBottomContent()
-	return Template.expandTemplate(
-		mw.getCurrentFrame(),
-		'Upcoming and ongoing tournaments of',
-		{team = self.name}
-	)
+	return UpcomingTournaments{name = self.name}
 end
 
 ---@param id string
@@ -76,7 +82,7 @@ function CustomInjector:parse(id, widgets)
 		return {
 			Cell{name = 'Abbreviation', content = {args.abbreviation}},
 			Cell{name = '[[Affiliate_Partnerships|Affiliate]]', content = {
-				args.affiliate and TeamTemplate.team(nil, args.affiliate) or nil}}
+				args.affiliate and OpponentDisplay.InlineTeamContainer{template = args.affiliate, displayType = 'standard'} or nil}}
 		}
 	end
 

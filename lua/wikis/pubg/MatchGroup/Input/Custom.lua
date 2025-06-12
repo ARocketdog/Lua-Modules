@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=pubg
 -- page=Module:MatchGroup/Input/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -23,6 +22,7 @@ local MatchFunctions = {
 }
 local MapFunctions = {}
 
+---@class PubgFfaMatchParser: FfaMatchParserInterface
 local FfaMatchFunctions = {
 	OPPONENT_CONFIG = {
 		resolveRedirect = true,

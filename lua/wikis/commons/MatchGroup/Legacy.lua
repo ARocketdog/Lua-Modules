@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:MatchGroup/Legacy
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -325,14 +324,6 @@ end
 
 ---@param isReset boolean
 ---@param match table
-function MatchGroupLegacy:handleFinished(isReset, match)
-	if isReset then return end
-	match['finished'] = String.isNotEmpty(((match.opponent1 or {}).win or '') ..
-		((match.opponent2 or {}).win or ''))
-end
-
----@param isReset boolean
----@param match table
 function MatchGroupLegacy:handleOtherMatchParams(isReset, match)
 end
 
@@ -346,7 +337,7 @@ function MatchGroupLegacy:getMatch(match2key, match1params)
 
 	self:handleOpponents(isReset, match1params, match)
 	self:handleDetails(isReset, match1params, match)
-	self:handleFinished(isReset, match)
+	match.finished = true
 	self:handleOtherMatchParams(isReset, match)
 	Array.forEach(Array.range(1, MAX_NUMBER_OF_OPPONENTS), function (opponentIndex)
 		local opponent = match['opponent' .. opponentIndex] or {}

@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=warcraft
 -- page=Module:MatchSummary/Ffa
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -40,8 +39,7 @@ function WarcraftMatchSummaryFfa.getByMatchId(props)
 			idx = 0,
 			children = WidgetUtil.collect(
 				MatchSummaryWidgets.GamesSchedule{match = match},
-				MatchSummaryWidgets.Mvp(match.extradata.mvp),
-				MatchSummaryWidgets.MatchComment{match = match},
+				MatchSummaryWidgets.MatchInformation(match),
 				BaseMatchSummary.standardMatch(match, Parser)
 			)
 		}

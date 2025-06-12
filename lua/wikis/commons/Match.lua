@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Match
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -525,19 +524,8 @@ function Match.clampFields(record, allowedKeys)
 	end
 end
 
----Entry point from Template:TemplateMatch
----@param frame Frame
----@return string
-function Match.templateFromMatchID(frame)
-	local args = Arguments.getArgs(frame)
-	local matchId = args[1] or 'match id is empty'
-	return MatchGroupUtil.matchIdToKey(matchId)
-end
-
 if FeatureFlag.get('perf') then
 	Match.perfConfig = Table.getByPathOrNil(MatchGroupConfig, {'subobjectPerf'})
 end
-
-Lua.autoInvokeEntryPoints(Match, 'Module:Match', {'toEncodedJson'})
 
 return Match

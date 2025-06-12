@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=fighters
 -- page=Module:Infobox/League/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -129,10 +128,7 @@ function CustomLeague:displayPrizePool(args, endDate)
 		string.upper(Variables.varDefault('tournament_currency', localCurrency) or ''))
 
 	if args.prizepoolassumed then
-		display = Abbreviation.make(
-			display,
-			'This prize is assumed, and has not been confirmed'
-		)
+		display = Abbreviation.make{text = display, title = 'This prize is assumed, and has not been confirmed'}
 	end
 
 	return display
@@ -185,6 +181,7 @@ function CustomLeague:addToLpdb(lpdbData, args)
 	lpdbData.extradata.circuit_tier = args.circuittier
 	lpdbData.extradata.circuit2 = args.circuit2
 	lpdbData.extradata.circuit2_tier = args.circuit2tier
+	lpdbData.extradata.region = args.region
 
 	Variables.varDefine('tournament_extradata', Json.stringify(lpdbData.extradata))
 
@@ -198,9 +195,11 @@ function CustomLeague:defineCustomPageVariables(args)
 	Variables.varDefine('circuit', args.circuit)
 	Variables.varDefine('circuittier', args.circuittier)
 	Variables.varDefine('circuitabbr', args.circuitabbr)
+	Variables.varDefine('circuitregion', args.region)
 	Variables.varDefine('circuit2', args.circuit2)
 	Variables.varDefine('circuit2tier', args.circuit2tier)
 	Variables.varDefine('circuit2abbr', args.circuit2abbr)
+	Variables.varDefine('circuit2region', args.region2)
 	Variables.varDefine('seriesabbr', args.abbreviation)
 	Variables.varDefine('tournament_link', self.pagename)
 

@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Standings/Table
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -33,7 +32,7 @@ local StandingsTable = {}
 
 ---@class StandingTableOpponentData
 ---@field rounds {tiebreakerPoints: number?, specialstatus: string, scoreboard: Scoreboard?,
----match: MatchGroupUtilMatch?, matches: MatchGroupUtilMatch[]}[]?
+---match: MatchGroupUtilMatch?, matches: MatchGroupUtilMatch[], matchId: string}[]?
 ---@field opponent standardOpponent
 ---@field startingPoints number?
 

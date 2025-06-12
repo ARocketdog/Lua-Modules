@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:MatchGroup
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -274,7 +273,5 @@ end
 if FeatureFlag.get('perf') then
 	MatchGroup.perfConfig = Table.getByPathOrNil(MatchGroupConfig, {'perf'})
 end
-
-Lua.autoInvokeEntryPoints(MatchGroup, 'Module:MatchGroup')
 
 return MatchGroup

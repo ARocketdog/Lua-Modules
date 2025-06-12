@@ -1,13 +1,11 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Namespace
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
 local Array = require('Module:Array')
-local Class = require('Module:Class')
 local FnUtil = require('Module:FnUtil')
 local String = require('Module:StringUtils')
 local Table = require('Module:Table')
@@ -77,6 +75,7 @@ end)
 ---@param name string?
 ---@return integer?
 function Namespace.idFromName(name)
+	name = (name or ''):gsub('_', ' ')
 	return Namespace.getIdsByName()[name]
 end
 
@@ -99,4 +98,4 @@ function Namespace.prefixFromId(id)
 	return name
 end
 
-return Class.export(Namespace, {frameOnly = true})
+return Namespace

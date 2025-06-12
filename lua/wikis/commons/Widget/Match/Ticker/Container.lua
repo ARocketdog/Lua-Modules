@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Widget/Match/Ticker/Container
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -22,13 +21,9 @@ local FilterConfig = Lua.import('Module:FilterButtons/Config')
 ---@operator call(table): MatchTickerContainer
 local MatchTickerContainer = Class.new(Widget)
 MatchTickerContainer.defaultProps = {
-	matchTicker = {
-		module = 'MatchTicker/Custom',
-		fn = 'newMainPage',
-		args = {
-			limit = 10,
-		}
-	},
+	limit = 10,
+	module = 'MatchTicker/Custom',
+	fn = 'newMainPage',
 }
 
 ---@return Widget
@@ -41,38 +36,40 @@ function MatchTickerContainer:render()
 	local filterText = table.concat(Array.map(filters, filterName), ',')
 
 	local defaultFilterParams = Table.map(FilterConfig.categories, function (_, category)
-		return filterName(category.name), table.concat(category.defaultItems, ',')
+		return filterName(category.name), table.concat(category.defaultItems or {}, ',')
 	end)
+
+	local matchTickerArgs = {
+		limit = self.props.limit,
+		displayGameIcons = self.props.displayGameIcons
+	}
 
 	local devFlag = FeatureFlag.get('dev')
 
 	---@param type 'upcoming' | 'recent'
 	local function buildTemplateExpansionString(type)
-		local config = self.defaultProps.matchTicker
-
 		return String.interpolate(
 			'#invoke:Lua|invoke|module=${module}|fn=${fn}${args}',
 			{
-				module = config.module,
-				fn = config.fn,
-				args = table.concat(Array.map(
-					Table.entries(Table.merge(config.args, {type=type, dev=devFlag})),
-					function (entry)
-						return String.interpolate('|${key}=${value}', {key = entry[1], value = entry[2]})
+				module = self.defaultProps.module,
+				fn = self.defaultProps.fn,
+				args = table.concat(Array.extractValues(Table.map(
+					Table.merge(matchTickerArgs, {type=type, dev=devFlag}),
+					function (key, value)
+						return key, String.interpolate('|${key}=${value}', {key = key, value = tostring(value)})
 					end
-				), '')
+				)), '')
 			}
 		)
 	end
 
-	---@param type 'upcoming' | 'recent'
+	---@param type 'upcoming' |'recent'
 	local function callTemplate(type)
-		local config = self.defaultProps.matchTicker
-		local ticker = Lua.import('Module:' .. config.module)
-		return ticker[config.fn](
+		local ticker = Lua.import('Module:' .. self.defaultProps.module)
+		return ticker[self.defaultProps.fn](
 			Table.merge(
-				config.args,
-				{type = type},
+				{type=type},
+				matchTickerArgs,
 				defaultFilterParams
 			)
 		)
@@ -148,7 +145,7 @@ function MatchTickerContainer:render()
 					['data-filter-expansion-template'] = buildTemplateExpansionString('recent'),
 					['data-filter-groups'] = filterText,
 				},
-				children = callTemplate('upcoming'),
+				children = callTemplate('recent'),
 			},
 		},
 	}

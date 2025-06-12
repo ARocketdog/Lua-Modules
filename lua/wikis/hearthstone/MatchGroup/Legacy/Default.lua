@@ -1,13 +1,11 @@
 ---
 -- @Liquipedia
--- wiki=hearthstone
 -- page=Module:MatchGroup/Legacy/Default
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
 local Class = require('Module:Class')
-local Logic = require('Module:Logic')
 local Lua = require('Module:Lua')
 local String = require('Module:StringUtils')
 local Table = require('Module:Table')
@@ -63,12 +61,6 @@ function MatchGroupLegacyDefault:getMap()
 	}
 end
 
----@param isReset boolean
----@param match table
-function MatchGroupLegacyDefault:handleFinished(isReset, match)
-	match.finished = Logic.readBool(match.finished) or Logic.isNotEmpty(match.win)
-end
-
 ---@param isReset boolean?
 ---@param match table
 function MatchGroupLegacyDefault:handleOtherMatchParams(isReset, match)
@@ -76,6 +68,7 @@ function MatchGroupLegacyDefault:handleOtherMatchParams(isReset, match)
 end
 
 ---@param frame Frame
+---@return string
 function MatchGroupLegacyDefault.run(frame)
 	return MatchGroupLegacyDefault(frame):build()
 end

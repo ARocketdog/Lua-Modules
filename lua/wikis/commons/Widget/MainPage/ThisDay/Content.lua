@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Widget/MainPage/ThisDay/Content
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -33,7 +32,7 @@ function ThisDayContent:render()
 	local day = self.props.day
 	local frame = mw.getCurrentFrame()
 	local birthdayListPage = self.props.birthdayListPage
-	local showBirthdayList = String.isNotEmpty(birthdayListPage) and Page.exists(birthdayListPage)
+	local showBirthdayList = String.isNotEmpty(birthdayListPage) and Page.exists(birthdayListPage --[[@as string]])
 	return WidgetUtil.collect(
 		Div{
 			attributes = { id = 'this-day-facts' },

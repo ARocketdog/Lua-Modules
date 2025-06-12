@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:GetMatchGroupCopyPaste/wiki/Base
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -124,9 +123,9 @@ function WikiCopyPaste.getFfaOpponent(mode, mapCount)
 	return ''
 end
 
----function that sets the text that starts the invoke of the MatchGroup Moduiles,
----contains madatory stuff like bracketid, templateid and MatchGroup type (matchlist or bracket)
----@param template string
+---function that sets the text that starts the invoke of the MatchGroup Modules,
+---contains mandatory stuff like bracketid, templateid and MatchGroup type (matchlist or bracket)
+---@param template string?
 ---@param id string
 ---@param modus string
 ---@param args table
@@ -139,7 +138,7 @@ function WikiCopyPaste.getStart(template, id, modus, args)
 end
 
 ---@param modus string
----@param template string
+---@param template string?
 ---@return string
 function WikiCopyPaste.getMatchGroupTypeCopyPaste(modus, template)
 	if modus == 'bracket' then
