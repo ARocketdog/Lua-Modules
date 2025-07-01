@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=leagueoflegends
 -- page=Module:Infobox/Character/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -176,7 +175,7 @@ end
 
 ---@param args table
 ---@return string[]
-function Character:getRoles(args)
+function CustomCharacter:getRoles(args)
 	return {
 		args.primaryrole,
 		args.secondaryrole

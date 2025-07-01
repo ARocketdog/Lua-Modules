@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=tft
 -- page=Module:MatchGroup/Input/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -20,7 +19,9 @@ local MatchFunctions = {
 local FfaMatchFunctions = {
 	DEFAULT_MODE = 'solos',
 }
-local MapFunctions = {}
+local MapFunctions = {
+	BREAK_ON_EMPTY = true
+}
 local FfaMapFunctions = {}
 
 local DEFAULT_BESTOF = 3
@@ -65,14 +66,6 @@ function MatchFunctions.getBestOf(bestofInput)
 	local bestof = tonumber(bestofInput) or tonumber(Variables.varDefault('match_bestof')) or DEFAULT_BESTOF
 	Variables.varDefine('match_bestof', bestof)
 	return bestof
-end
-
----@param games table[]
----@return table[]
-function MatchFunctions.removeUnsetMaps(games)
-	return Array.filter(games, function(map)
-		return map.map ~= nil
-	end)
 end
 
 ---@param map table

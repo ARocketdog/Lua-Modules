@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:TeamTemplate
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -91,7 +90,21 @@ does not exist.
 ---@return teamTemplateData?
 function TeamTemplate.getRawOrNil(team, date)
 	team = team:gsub('_', ' '):lower()
-	return mw.ext.TeamTemplate.raw(team, date)
+
+	-- return mw.ext.TeamTemplate.raw(team, date)
+	-- below is a temp fix to re-allow team templates with underscores
+	-- should be removed once team template extension is restricted and existing team templates are converted
+	local teamTemplateData = mw.ext.TeamTemplate.raw(team, date)
+	if teamTemplateData then
+		return teamTemplateData
+	end
+
+	local teamWithUnderscores = team:gsub(' ', '_'):lower()
+	teamTemplateData = mw.ext.TeamTemplate.raw(teamWithUnderscores, date)
+	if teamTemplateData then
+		mw.ext.TeamLiquidIntegration.add_category('Pages with underscore team templates')
+	end
+	return teamTemplateData
 end
 
 ---Creates error message for missing team templates.

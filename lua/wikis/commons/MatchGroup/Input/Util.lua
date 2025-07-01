@@ -1,25 +1,25 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:MatchGroup/Input/Util
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
-local Array = require('Module:Array')
-local DateExt = require('Module:Date/Ext')
-local Faction = require('Module:Faction')
-local Flags = require('Module:Flags')
-local FnUtil = require('Module:FnUtil')
-local Json = require('Module:Json')
-local Logic = require('Module:Logic')
 local Lua = require('Module:Lua')
-local Operator = require('Module:Operator')
-local Page = require('Module:Page')
-local PageVariableNamespace = require('Module:PageVariableNamespace')
-local Streams = require('Module:Links/Stream')
-local String = require('Module:StringUtils')
-local Table = require('Module:Table')
+
+local Array = Lua.import('Module:Array')
+local DateExt = Lua.import('Module:Date/Ext')
+local Faction = Lua.import('Module:Faction')
+local Flags = Lua.import('Module:Flags')
+local FnUtil = Lua.import('Module:FnUtil')
+local Json = Lua.import('Module:Json')
+local Logic = Lua.import('Module:Logic')
+local Operator = Lua.import('Module:Operator')
+local Page = Lua.import('Module:Page')
+local PageVariableNamespace = Lua.import('Module:PageVariableNamespace')
+local Streams = Lua.import('Module:Links/Stream')
+local String = Lua.import('Module:StringUtils')
+local Table = Lua.import('Module:Table')
 
 local Info = Lua.import('Module:Info', {loadData = true})
 local Links = Lua.import('Module:Links')
@@ -27,7 +27,7 @@ local Links = Lua.import('Module:Links')
 local MatchGroupUtil = Lua.import('Module:MatchGroup/Util')
 local PlayerExt = Lua.import('Module:Player/Ext/Custom')
 
-local OpponentLibraries = require('Module:OpponentLibraries')
+local OpponentLibraries = Lua.import('Module:OpponentLibraries')
 local Opponent = OpponentLibraries.Opponent
 
 local globalVars = PageVariableNamespace{cached = true}
@@ -1076,6 +1076,7 @@ end
 ---@field adjustOpponent? fun(opponent: MGIParsedOpponent, opponentIndex: integer)
 ---@field getLinks? fun(match: table, games: table[]): table
 ---@field getHeadToHeadLink? fun(match: table, opponents: table[]): string?
+---@field getPatch? fun(match: table, games: table[]): string?
 ---@field readDate? readDateFunction
 ---@field getMode? fun(opponents: table[]): string
 ---@field readOpponent? fun(match: table, opponentIndex: integer, opponentConfig: readOpponentOptions?):
@@ -1098,6 +1099,7 @@ end
 --- - adjustOpponent(opponent, opponentIndex)
 --- - getLinks(match, games): table?
 --- - getHeadToHeadLink(match, opponents): string?
+--- - getPatch(match, games): string?
 --- - readDate(match): table
 --- - getMode(opponents): string?
 --- - readOpponent(match, opponentIndex, opponentConfig): MGIParsedOpponent
@@ -1168,6 +1170,9 @@ function MatchGroupInputUtil.standardProcessMatch(match, Parser, FfaParser, mapP
 
 	match.mode = Parser.getMode and Parser.getMode(opponents)
 		or Logic.emptyOr(match.mode, globalVars:get('tournament_mode'), Parser.DEFAULT_MODE)
+	if Parser.getPatch then
+		match.patch = Parser.getPatch(match, games)
+	end
 	Table.mergeInto(match, MatchGroupInputUtil.getTournamentContext(match))
 
 	match.stream = Streams.processStreams(match)
@@ -1198,6 +1203,7 @@ end
 ---@field getGame? fun(match: table, map:table): string?
 ---@field ADD_SUB_GROUP? boolean
 ---@field BREAK_ON_EMPTY? boolean
+---@field INHERIT_MAP_DATES? boolean
 
 --- The standard way to process a map input.
 ---
@@ -1226,6 +1232,8 @@ end
 function MatchGroupInputUtil.standardProcessMaps(match, opponents, Parser)
 	local maps = {}
 	local subGroup = 0
+	local lastDate = match.date
+
 	for key, mapInput, mapIndex in Table.iter.pairsByPrefix(match, 'map', {requireIndex = true}) do
 		local map = Parser.getMap and Parser.getMap(mapInput) or mapInput
 		if Parser.BREAK_ON_EMPTY and Logic.isDeepEmpty(map) then
@@ -1235,6 +1243,11 @@ function MatchGroupInputUtil.standardProcessMaps(match, opponents, Parser)
 		local winnerInput = map.winner --[[@as string?]]
 
 		local dateToUse = map.date or match.date
+		if Parser.INHERIT_MAP_DATES then
+			dateToUse = map.date or lastDate
+			lastDate = dateToUse
+		end
+
 		Table.mergeInto(map, MatchGroupInputUtil.readDate(dateToUse))
 
 		if Parser.ADD_SUB_GROUP then
@@ -1411,7 +1424,7 @@ function MatchGroupInputUtil.standardProcessFfaMatch(match, Parser, mapProps)
 	match.links = MatchGroupInputUtil.getLinks(match)
 	match.extradata = Table.merge({
 		mvp = MatchGroupInputUtil.readMvp(match, opponents),
-		casters = MatchGroupInputUtil.readCasters(match, {noSort = true})
+		casters = MatchGroupInputUtil.readCasters(match)
 	}, Parser.getExtraData and Parser.getExtraData(match, games, opponents, settings) or {
 		placementinfo = settings.placementInfo,
 		settings = settings.settings,
@@ -1432,6 +1445,7 @@ end
 ---@field readMapOpponent? fun(map: table, matchOpponent: table, opponentIndex: integer): table
 ---@field getMapWinner? fun(status: string?, winnerInput: integer|string?, mapOpponents: table[]): integer?
 ---@field mapIsFinished? fun(match: table, map: table): boolean
+---@field getGame? fun(match: table, map:table): string?
 
 --- The standard way to process a ffa map input.
 ---
@@ -1463,6 +1477,10 @@ function MatchGroupInputUtil.standardProcessFfaMaps(match, opponents, scoreSetti
 			map.patch = Parser.getPatch(map)
 		end
 
+		if Parser.getGame then
+			map.game = Parser.getGame(match, map)
+		end
+
 		local dateToUse = map.date or match.date
 		Table.mergeInto(map, MatchGroupInputUtil.readDate(dateToUse))
 
@@ -1492,8 +1510,9 @@ function MatchGroupInputUtil.standardProcessFfaMaps(match, opponents, scoreSetti
 		end
 
 		map.extradata = Table.merge({
+			displayname = map.mapDisplayName,
 			mvp = MatchGroupInputUtil.readMvp(map, opponents),
-			casters = MatchGroupInputUtil.readCasters(map, {noSort = true})
+			casters = MatchGroupInputUtil.readCasters(map)
 		}, Parser.getExtraData and Parser.getExtraData(match, map, opponents) or nil)
 
 		table.insert(maps, map)

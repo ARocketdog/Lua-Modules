@@ -1,13 +1,14 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:VodLink
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
-local Class = require('Module:Class')
-local Logic = require('Module:Logic')
+local Lua = require('Module:Lua')
+
+local Class = Lua.import('Module:Class')
+local Logic = Lua.import('Module:Logic')
 
 local VodLink = {}
 
@@ -51,4 +52,4 @@ function VodLink.display(args)
 		:wikitext('[[File:' .. fileName .. '|32px|link=' .. link .. ']]')
 end
 
-return Class.export(VodLink, {frameOnly = true})
+return Class.export(VodLink, {frameOnly = true, exports = {'display'}})

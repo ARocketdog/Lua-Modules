@@ -1,15 +1,16 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Date/Ext
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
-local FnUtil = require('Module:FnUtil')
-local Logic = require('Module:Logic')
-local Ordinal = require('Module:Ordinal')
-local Variables = require('Module:Variables')
+local Lua = require('Module:Lua')
+
+local FnUtil = Lua.import('Module:FnUtil')
+local Logic = Lua.import('Module:Logic')
+local Ordinal = Lua.import('Module:Ordinal')
+local Variables = Lua.import('Module:Variables')
 
 --[[
 Functions for working with dates strings and timestamps.
@@ -179,6 +180,20 @@ function DateExt.quarterOf(props)
 	end
 
 	return quarter .. Ordinal.suffix(quarter)
+end
+
+---@param date string|integer|osdateparam?
+---@return integer
+function DateExt.getYearOf(date)
+	local timestamp = DateExt.readTimestamp(date) or DateExt.getCurrentTimestamp()
+	return tonumber(DateExt.formatTimestamp('Y', timestamp)) --[[@as integer]]
+end
+
+---@param date string|integer|osdateparam?
+---@return integer
+function DateExt.getMonthOf(date)
+	local timestamp = DateExt.readTimestamp(date) or DateExt.getCurrentTimestamp()
+	return tonumber(DateExt.formatTimestamp('n', timestamp)) --[[@as integer]]
 end
 
 return DateExt

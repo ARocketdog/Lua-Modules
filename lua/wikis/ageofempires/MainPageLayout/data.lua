@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=ageofempires
 -- page=Module:MainPageLayout/data
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -16,6 +15,7 @@ local Div = HtmlWidgets.Div
 local MatchTicker = Lua.import('Module:Widget/MainPage/MatchTicker')
 local ThisDayWidgets = Lua.import('Module:Widget/MainPage/ThisDay')
 local TransfersList = Lua.import('Module:Widget/MainPage/TransfersList')
+local WantToHelp = Lua.import('Module:Widget/MainPage/WantToHelp')
 
 local CONTENT = {
 	usefulArticles = {
@@ -26,7 +26,7 @@ local CONTENT = {
 	},
 	wantToHelp = {
 		heading = 'Want To Help?',
-		body = '{{Liquipedia:Want_to_help}}',
+		body = WantToHelp{},
 		padding = true,
 		boxid = 1504,
 	},
@@ -46,7 +46,6 @@ local CONTENT = {
 	specialEvents = {
 		noPanel = true,
 		body = '{{Liquipedia:Special Event}}',
-		boxid = 1516,
 	},
 	filterButtons = {
 		noPanel = true,
@@ -58,6 +57,7 @@ local CONTENT = {
 	matches = {
 		heading = 'Matches',
 		body = MatchTicker{
+			displayGameIcons = true,
 			matchesPortal = 'Liquipedia:Upcoming_and_ongoing_matches'
 		},
 		padding = true,
@@ -129,8 +129,10 @@ return {
 			title = 'Civilizations',
 			link = 'Portal:Civilizations',
 			count = {
-				value = 124
-			}
+				method = 'LPDB',
+				table = 'datapoint',
+				conditions = '[[type::faction]]'
+			},
 		},
 		{
 			file = 'JorDan at The Garrison.jpg',

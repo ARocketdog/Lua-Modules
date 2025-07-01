@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=dota2
 -- page=Module:MainPageLayout/data
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -20,6 +19,7 @@ local IconFa = Lua.import('Module:Widget/Image/Icon/Fontawesome')
 local MatchTicker = Lua.import('Module:Widget/MainPage/MatchTicker')
 local ThisDayWidgets = Lua.import('Module:Widget/MainPage/ThisDay')
 local TransfersList = Lua.import('Module:Widget/MainPage/TransfersList')
+local WantToHelp = Lua.import('Module:Widget/MainPage/WantToHelp')
 local WidgetUtil = Lua.import('Module:Widget/Util')
 
 local ABOUT_HEADING = 'About Liquipedia\'s Dota 2 Wiki'
@@ -30,8 +30,9 @@ local ABOUT_BODY = 'We are the largest Dota 2 wiki that anyone can edit, maintai
 
 ---@param link string
 ---@param displayName string
+---@param hubIcon string
 ---@return Widget
-local function createHubButton(link, displayName)
+local function createHubButton(link, displayName, hubIcon)
 	return Button{
 		link = link,
 		title = 'Click here to get to the ' .. displayName:lower(),
@@ -39,16 +40,16 @@ local function createHubButton(link, displayName)
 		children = {
 			IconFa{
 				additionalClasses = { 'wiki-color-dark' },
-				iconName = 'hub'
+				iconName = hubIcon,
 			},
 			' View ' .. displayName
 		}
 	}
 end
 
-local MAIN_PAGE_BUTTON = createHubButton('Main Page', 'Main Page')
-local ESPORTS_HUB_BUTTON = createHubButton('Portal:Esports', 'Esports Hub')
-local GAME_HUB_BUTTON = createHubButton('Portal:Game', 'Game Hub')
+local MAIN_PAGE_BUTTON = createHubButton('Main Page', 'Main Page', 'main_hub')
+local ESPORTS_HUB_BUTTON = createHubButton('Portal:Esports', 'Esports Hub', 'esports_hub')
+local GAME_HUB_BUTTON = createHubButton('Portal:Game', 'Game Hub', 'game_hub')
 
 local CONTENT = {
 	aboutMain = {
@@ -135,16 +136,15 @@ local CONTENT = {
 	},
 	wantToHelp = {
 		heading = 'Want To Help?',
-		body = '{{Liquipedia:Want_to_help}}',
+		body = WantToHelp{},
 		padding = true,
 		boxid = 1504,
 	},
 	transfers = {
 		heading = 'Transfers',
 		body = TransfersList{
-			transferPage = function ()
-				return 'Transfers/' .. os.date('%Y') .. '/' .. DateExt.quarterOf{ ordinalSuffix = true } .. ' Quarter'
-			end
+			transferPage = 'Transfers/' .. os.date('%Y') .. '/' ..
+				DateExt.quarterOf{ ordinalSuffix = true } .. ' Quarter'
 		},
 		boxid = 1509,
 	},

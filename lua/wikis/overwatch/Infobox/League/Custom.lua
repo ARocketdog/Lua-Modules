@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=overwatch
 -- page=Module:Infobox/League/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -125,6 +124,10 @@ function CustomLeague:getWikiCategories(args)
 		table.insert(categories, 'Tournaments without game version')
 	else
 		table.insert(categories, Game.name{game = args.game} .. ' Competitions')
+	end
+
+	if Logic.readBool(args.marginalized_gender) then
+		table.insert(categories, 'Marginalized Gender Tournaments')
 	end
 
 	return categories

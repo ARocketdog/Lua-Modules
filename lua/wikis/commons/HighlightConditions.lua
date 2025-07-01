@@ -1,13 +1,14 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:HighlightConditions
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
-local Logic = require('Module:Logic')
-local String = require('Module:StringUtils')
+local Lua = require('Module:Lua')
+
+local Logic = Lua.import('Module:Logic')
+local String = Lua.import('Module:StringUtils')
 
 local HighlightConditions = {}
 

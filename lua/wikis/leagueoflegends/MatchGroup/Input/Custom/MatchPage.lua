@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=leagueoflegends
 -- page=Module:MatchGroup/Input/Custom/MatchPage
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -114,7 +113,9 @@ function CustomMatchGroupInputMatchPage.getObjectives(map, opponentIndex)
 		inhibitors = team.inhibitorKills,
 		barons = team.baronKills,
 		dragons = team.dragonKills,
-		heralds = team.heraldKills,
+		heralds = team.riftHeraldKills,
+		grubs = team.grubKills,
+		atakhans = team.atakhanKills,
 	}
 end
 

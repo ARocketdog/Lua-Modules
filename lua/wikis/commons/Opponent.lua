@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Opponent
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -353,6 +352,8 @@ Returns nil if the team template does not exist.
 function Opponent.toName(opponent)
 	if opponent.type == Opponent.team then
 		local pageName = TeamTemplate.getPageName(opponent.template)
+		-- annos expect a string return, so let it error if we get a nil return
+		assert(pageName, 'Invalid team template: ' .. (opponent.template or ''))
 		return Page.applyUnderScoresIfEnforced(pageName)
 	elseif Opponent.typeIsParty(opponent.type) then
 		local pageNames = Array.map(opponent.players, function(player)

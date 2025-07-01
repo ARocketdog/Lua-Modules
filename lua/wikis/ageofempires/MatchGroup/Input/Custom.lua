@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=ageofempires
 -- page=Module:MatchGroup/Input/Custom
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -32,11 +31,13 @@ local MatchFunctions = {
 }
 local MapFunctions = {
 	BREAK_ON_EMPTY = true,
+	INHERIT_MAP_DATES = true,
 }
 
 local FffMatchFunctions = {
 	OPPONENT_CONFIG = OPPONENT_CONFIG,
 }
+---@type FfaMapParserInterface
 local FfaMapFunctions = {}
 
 ---@param match table
@@ -324,6 +325,9 @@ function FffMatchFunctions.getExtraData(match, games, opponents, settings)
 		settings = settings.settings,
 	}
 end
+
+FfaMapFunctions.getMapName = MapFunctions.getMapName
+FfaMapFunctions.getGame = MapFunctions.getGame
 
 ---@param map table
 ---@param opponent table

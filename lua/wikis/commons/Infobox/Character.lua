@@ -1,20 +1,20 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Infobox/Character
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
-local Class = require('Module:Class')
-local Flags = require('Module:Flags')
-local Json = require('Module:Json')
 local Lua = require('Module:Lua')
-local Namespace = require('Module:Namespace')
+
+local Class = Lua.import('Module:Class')
+local Flags = Lua.import('Module:Flags')
+local Json = Lua.import('Module:Json')
+local Namespace = Lua.import('Module:Namespace')
 
 local BasicInfobox = Lua.import('Module:Infobox/Basic')
 
-local Widgets = require('Module:Widget/All')
+local Widgets = Lua.import('Module:Widget/All')
 local Cell = Widgets.Cell
 local Header = Widgets.Header
 local Title = Widgets.Title
@@ -106,7 +106,7 @@ function Character:_createLocation(location)
 		return ''
 	end
 
-	return Flags.Icon({flag = location, shouldLink = true}) .. '&nbsp;' ..
+	return Flags.Icon{flag = location, shouldLink = true} .. '&nbsp;' ..
 		'[[:Category:' .. location .. '|' .. location .. ']]'
 end
 

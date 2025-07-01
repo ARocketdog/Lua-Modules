@@ -1,17 +1,17 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Player/Display
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
-local Class = require('Module:Class')
-local DisplayUtil = require('Module:DisplayUtil')
-local Logic = require('Module:Logic')
 local Lua = require('Module:Lua')
-local Flags = require('Module:Flags')
-local Abbreviation = require('Module:Abbreviation')
+
+local Class = Lua.import('Module:Class')
+local DisplayUtil = Lua.import('Module:DisplayUtil')
+local Logic = Lua.import('Module:Logic')
+local Flags = Lua.import('Module:Flags')
+local Abbreviation = Lua.import('Module:Abbreviation')
 
 local Opponent = Lua.import('Module:Opponent')
 
@@ -115,11 +115,15 @@ function PlayerDisplay.InlinePlayer(props)
 		:wikitext(text)
 end
 
--- Note: require('Module:Flags').Icon automatically includes a span with class="flag"
+-- Note: Lua.import('Module:Flags').Icon automatically includes a span with class="flag"
 ---@param args {flag: string?}
 ---@return string
 function PlayerDisplay.Flag(args)
-	return Flags.Icon({flag = args.flag, shouldLink = false})
+	return Flags.Icon{flag = args.flag, shouldLink = false}
 end
 
-return Class.export(PlayerDisplay)
+return Class.export(PlayerDisplay, {exports = {
+	'BlockPlayer',
+	'InlinePlayer',
+	'Flag',
+}})

@@ -1,6 +1,5 @@
 ---
 -- @Liquipedia
--- wiki=valorant
 -- page=Module:MainPageLayout/data
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -12,6 +11,7 @@ local TournamentsTicker = Lua.import('Module:Widget/Tournaments/Ticker')
 
 local HtmlWidgets = Lua.import('Module:Widget/Html/All')
 local Div = HtmlWidgets.Div
+local LiquipediaApp = Lua.import('Module:Widget/MainPage/LiquipediaApp')
 local MatchTicker = Lua.import('Module:Widget/MainPage/MatchTicker')
 local FilterButtonsWidget = Lua.import('Module:Widget/FilterButtons')
 local TransfersList = Lua.import('Module:Widget/MainPage/TransfersList')
@@ -36,7 +36,7 @@ local CONTENT = {
 	liquipediaApp = {
 		heading = 'Download the Liquipedia App',
 		padding = true,
-		body = '{{Liquipedia:App}}',
+		body = LiquipediaApp{},
 		boxid = 1505,
 	},
 	filterButtons = {

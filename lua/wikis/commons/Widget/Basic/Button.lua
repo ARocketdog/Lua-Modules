@@ -1,15 +1,15 @@
 ---
 -- @Liquipedia
--- wiki=commons
 -- page=Module:Widget/Basic/Button
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 --
 
-local Array = require('Module:Array')
-local Class = require('Module:Class')
 local Lua = require('Module:Lua')
-local Table = require('Module:Table')
+
+local Array = Lua.import('Module:Array')
+local Class = Lua.import('Module:Class')
+local Table = Lua.import('Module:Table')
 
 local Widget = Lua.import('Module:Widget')
 local HtmlWidgets = Lua.import('Module:Widget/Html/All')
@@ -44,6 +44,8 @@ function Button:render()
 		table.insert(cssClasses, 'btn-primary')
 	elseif self.props.variant == 'secondary' then
 		table.insert(cssClasses, 'btn-secondary')
+	elseif self.props.variant == 'ghost' then
+		table.insert(cssClasses, 'btn-ghost')
 	end
 
 	if self.props.size == 'sm' then
