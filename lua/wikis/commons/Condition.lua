@@ -209,7 +209,7 @@ end
 ---@param values (string|number)[]
 ---@return ConditionTree?
 function ConditionUtil._multiValueCondition(column, booleanOperator, comparator, values)
-	if Array.isEmpty(values) then return end
+	if Logic.isEmpty(values) then return end
 
 	return ConditionTree(booleanOperator)
 		:add(Array.map(Array.unique(values), function(value)
