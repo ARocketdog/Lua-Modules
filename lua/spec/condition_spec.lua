@@ -154,7 +154,7 @@ describe('LPDB Condition Builder', function()
 
 			assert.are_equal(
 				'[[liquipediatiertype::!Qualifier]] AND [[liquipediatiertype::!Misc]]',
-				tostring(ConditionUtil.anyOf(tierTypeColumnName, {'Qualifier', 'Misc'}))
+				tostring(ConditionUtil.noneOf(tierTypeColumnName, {'Qualifier', 'Misc'}))
 			)
 		end)
 	end)
