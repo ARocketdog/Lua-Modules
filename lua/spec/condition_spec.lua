@@ -132,17 +132,17 @@ describe('LPDB Condition Builder', function()
 			assert.is_nil(ConditionUtil.anyOf(tierColumnName, {}))
 
 			assert.are_equal(
-				'([[liquipediatier::1]] OR [[liquipediatier::2]])',
+				'[[liquipediatier::1]] OR [[liquipediatier::2]]',
 				tostring(ConditionUtil.anyOf(tierColumnName, {1, 2}))
 			)
 
 			assert.are_equal(
-				'([[liquipediatier::1]] OR [[liquipediatier::2]] OR [[liquipediatier::3]])',
+				'[[liquipediatier::1]] OR [[liquipediatier::2]] OR [[liquipediatier::3]]',
 				tostring(ConditionUtil.anyOf(tierColumnName, {1, 2, 3}))
 			)
 
 			assert.are_equal(
-				'([[liquipediatier::1]] OR [[liquipediatier::2]] OR [[liquipediatier::3]])',
+				'[[liquipediatier::1]] OR [[liquipediatier::2]] OR [[liquipediatier::3]]',
 				tostring(ConditionUtil.anyOf(tierColumnName, {1, 2, 3, 2}))
 			)
 		end)
@@ -153,7 +153,7 @@ describe('LPDB Condition Builder', function()
 			assert.is_nil(ConditionUtil.noneOf(tierTypeColumnName, {}))
 
 			assert.are_equal(
-				'([[liquipediatiertype::!Qualifier]] AND [[liquipediatiertype::!Misc]])',
+				'[[liquipediatiertype::!Qualifier]] AND [[liquipediatiertype::!Misc]]',
 				tostring(ConditionUtil.anyOf(tierTypeColumnName, {'Qualifier', 'Misc'}))
 			)
 		end)
