@@ -82,9 +82,9 @@ function ThisDayQuery.tournament(month, day)
 		ColumnName('liquipediatier'),
 		Config.tiers
 	))
-	conditions:add(ConditionUtil.allOf(
+	conditions:add(ConditionUtil.noneOf(
 		ColumnName('liquipediatiertype'),
-		Config.tierTypes
+		Config.excludeTierTypes
 	))
 
 	return mw.ext.LiquipediaDB.lpdb('placement', {

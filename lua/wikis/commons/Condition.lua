@@ -186,14 +186,6 @@ function ConditionUtil.anyOf(column, values)
 	return ConditionUtil._multiValueCondition(column, BooleanOperator.any, Comparator.equals, values)
 end
 
----Builds "matches all of" condition from the given collection of values.
----@param column ColumnName
----@param values (string|number)[]
----@return ConditionTree?
-function ConditionUtil.allOf(column, values)
-	return ConditionUtil._multiValueCondition(column, BooleanOperator.all, Comparator.equals, values)
-end
-
 ---Builds "matches none of" condition from the given collection of values.
 ---@param column ColumnName
 ---@param values (string|number)[]
