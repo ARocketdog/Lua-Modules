@@ -58,12 +58,6 @@ local CONTENT = {
 		body = '{{Liquipedia:Special Event}}',
 		boxid = 1516,
 	},
-	heroes = {
-		heading = 'Heroes',
-		body = '{{Liquipedia:HeroTable}}',
-		padding = true,
-		boxid = 1501,
-	},
 	filterButtons = {
 		noPanel = true,
 		body = Div{
