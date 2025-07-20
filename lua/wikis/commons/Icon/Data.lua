@@ -5,6 +5,10 @@
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
 
 return {
+	-- Usage: Different ways to see data
+	schedule = 'far fa-table',
+	bracket = 'far fa-sitemap',
+
 	-- Usage: Match results
 	winner = 'fas fa-check',
 	draw = 'fas fa-minus',
@@ -40,6 +44,8 @@ return {
 	-- Usage: Expanding and collapsing hidden sections
 	expand = 'far fa-chevron-down',
 	collapse = 'far fa-chevron-up',
+	show = 'far fa-eye',
+	hide = 'far fa-eye-slash',
 
 	-- Usage: to indicate a selection of something was either left, right, down or up
 	up = 'fas fa-chevron-circle-up',
@@ -170,4 +176,11 @@ return {
 	-- Usage: Chess
 	chesskingoutline = 'far fa-chess-king',
 	chesskingfull = 'fas fa-chess-king',
+
+	-- Usage: For NavigationCards related actions and links
+	upload = 'far fa-upload',
+	support_hub = 'liquipedia-custom-icon liquipedia-custom-icon-support-hub',
+	copyright = 'far fa-copyright',
+	getting_started = 'far fa-seedling',
+	file_standards_guide = 'far fa-file-check',
 }
