@@ -6,7 +6,6 @@
 --
 
 local Array = require('Module:Array')
-local DateExt = require('Module:Date/Ext')
 local Faction = require('Module:Faction')
 local Game = require('Module:Game')
 local Logic = require('Module:Logic')
@@ -42,9 +41,8 @@ function CustomMatchSummary._determineWidth(match)
 end
 
 ---@param match MatchGroupUtilMatch
----@return Widget
+---@return Widget[]
 function CustomMatchSummary.createBody(match)
-	local showCountdown = match.timestamp ~= DateExt.defaultTimestamp
 	local games = Array.map(match.games, function(game)
 		return CustomMatchSummary._createGame(game, {
 			game = match.game,
@@ -52,10 +50,9 @@ function CustomMatchSummary.createBody(match)
 		})
 	end)
 
-	return MatchSummaryWidgets.Body{children = WidgetUtil.collect(
-		showCountdown and MatchSummaryWidgets.Row{children = DisplayHelper.MatchCountdownBlock(match)} or nil,
+	return WidgetUtil.collect(
 		games
-	)}
+	)
 end
 
 ---@param match MatchGroupUtilMatch
@@ -128,7 +125,6 @@ function CustomMatchSummary._createGame(game, props)
 
 	return MatchSummaryWidgets.Row{
 		classes = {'brkts-popup-body-game'},
-		css = {['font-size'] = '0.75rem'},
 		children = WidgetUtil.collect(
 			MatchSummaryWidgets.GameTeamWrapper{children = {
 					faction1,

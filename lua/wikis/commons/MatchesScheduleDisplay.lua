@@ -186,6 +186,7 @@ function MatchesTable:dateDisplay(match)
 			countdownArgs.rawdatetime = true
 		end
 		countdownArgs.timestamp = match.timestamp
+		countdownArgs.date = DateExt.toCountdownArg(match.timestamp, match.timezoneId)
 		return dateCell:wikitext(Countdown._create(countdownArgs))
 	elseif self.config.onlyShowExactDates then
 		return dateCell
@@ -325,11 +326,7 @@ end
 ---@return Html
 function MatchesTable.matchPageLinkDisplay(match)
 	return mw.html.create('td'):addClass('MatchPage')
-		:node(MatchPageButton{
-			matchId = match.matchId,
-			hasMatchPage = Logic.isNotEmpty(match.bracketData.matchPage),
-			short = false,
-		})
+		:node(MatchPageButton{match = match})
 end
 
 ---@param opponent standardOpponent

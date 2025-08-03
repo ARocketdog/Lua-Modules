@@ -42,7 +42,7 @@ function StarcraftMatchSummary.getByMatchId(args)
 end
 
 ---@param match StarcraftMatchGroupUtilMatch
----@return MatchSummaryBody
+---@return Widget[]
 function StarcraftMatchSummary.createBody(match)
 	StarcraftMatchSummary.computeOffFactions(match)
 
@@ -52,22 +52,21 @@ function StarcraftMatchSummary.createBody(match)
 		subMatches = match.submatches or {}
 	end
 
-	return MatchSummaryWidgets.Body{children = WidgetUtil.collect(
+	return WidgetUtil.collect(
 		isResetMatch and MatchSummaryWidgets.Row{
 			classes = {'brkts-popup-sc-veto-center'},
 			css = {['line-height'] = '80%', ['font-weight'] = 'bold'},
 			children = {'Reset match'},
 		} or nil,
-		match.dateIsExact and MatchSummaryWidgets.Row{children = DisplayHelper.MatchCountdownBlock(match)} or nil,
 		Array.map(match.opponents, StarcraftMatchSummary.advantageOrPenalty),
 		subMatches and Array.map(subMatches, StarcraftMatchSummary.TeamSubmatch)
 			or Array.map(match.games, FnUtil.curry(StarcraftMatchSummary.Game, {})),
 		Logic.isNotEmpty(match.vetoes) and MatchSummaryWidgets.Row{
-			classes = {'brkts-popup-sc-game-header brkts-popup-sc-veto-center'},
-			children = {'Vetoes'},
+			classes = {'brkts-popup-sc-veto-center'},
+			children = {HtmlWidgets.B{children = {'Vetoes'}}},
 		} or nil,
 		Array.map(match.vetoes or {}, StarcraftMatchSummary.Veto) or nil
-	)}
+	)
 end
 
 ---@param match StarcraftMatchGroupUtilMatch
